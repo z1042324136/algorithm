@@ -1,0 +1,40 @@
+class Solution {
+    public boolean makesquare(int[] nums) {
+        int sum = 0;
+        for(int num : nums)
+            sum += num;
+        if(sum == 0 || sum%4 != 0)
+            return false;
+        int target = sum/4;
+    
+        for(int num : nums)
+            if(num > target)
+                return false;
+        
+        Arrays.sort(nums);
+        backtrack(nums.length-1,nums,target,new int[4]);
+        return ans;
+        
+    }
+    boolean ans = false;
+    void backtrack(int cur,int[]nums,int target,int[] temp)
+    {
+        if(ans)return;
+        if(cur == -1)
+        {
+            for(int num : temp)
+                if(num != target)
+                    return;
+            ans = true;
+            return;
+        }
+        for(int i = 0;i < temp.length;i++)
+        {
+            int last = temp[i];
+            temp[i] +=  nums[cur];
+            if(temp[i] <= target)
+                backtrack(cur-1,nums,target,temp);
+            temp[i] = last;
+        }
+    }
+}
